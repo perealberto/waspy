@@ -1,0 +1,16 @@
+🐝 Brainstorming WasPy 🐝
+
+UI
+- [ ] Buscador de toda la vida
+- [ ] Grafo de interacciones (visual)
+- [ ] Template string básico para la clase Chat
+- [ ] Template string básico para la clase Message
+
+ESTADÍSTICAS
+- [x] Nº apariciones de palabra por persona
+- [x] Ranking de participación en el chat
+- [ ] Palabras más usadas por persona
+- [ ] Grafo de interacciones en el chat usando etiquetados "@\u2068<nombre>\u2069"
+
+PARSER
+- [ ] Tener en cuenta los "mensajes" del sistema del chat
