@@ -12,6 +12,10 @@ class Message:
         self.date = date
         self.tokens: tuple[str] = ()
 
+    def __str__(self) -> str:
+        # TODO
+        pass
+
 class Chat:
     STOPWORDS = {"DET", "ADP", "CCONJ", "SCONJ", "PRON"}
 
@@ -66,10 +70,11 @@ class Chat:
             for msg, doc in tqdm(zip(self.messages, docs), total=len(texts), desc="Tokenizando mensajes"):
                 msg.tokens = (
                     token.text for token in doc
-                    if token.pos__ not in self.STOPWORDS and not token.is_punct and not token.is_space
+                    if token.pos_ not in self.STOPWORDS and not token.is_punct and not token.is_space
                 )
 
     def __str__(self) -> str:
+        # TODO
         return f""
 
     def use_per_author(self, word: str) -> dict[str, int]:
@@ -85,7 +90,7 @@ class Chat:
         """
         use_per_author: dict[str, str] = {k:0 for k in self.authors}
         for m in self.messages:
-            if word in m.content:
+            if word in m.tokens:
                 use_per_author[m.author] += 1
         return use_per_author
 
@@ -101,3 +106,33 @@ class Chat:
         for m in self.messages:
             ranking[m.author] += 1
         return dict(sorted(ranking.items(), key=lambda p: p[1], reverse=True))
+
+    def word_ranking_per_author(self, n_rank = 3) -> dict[str, dict[str, int]]:
+        """
+        Calcular el ranking de las n (= 3) palabras más utilizadas por
+        cada autor del chat.
+        """
+        # TODO - Eliminar "archivo" "adjunto" de los mensajes
+
+        tokens_per_author: dict[str, list[tuple[str]]] = {}
+
+        for msg in self.messages:
+            if msg.author not in tokens_per_author:
+                tokens_per_author[msg.author] = [msg.tokens]
+            else:
+                tokens_per_author[msg.author].append(msg.tokens)
+
+        token_count: dict[str, int] = {}
+        for author, tokens_list in tokens_per_author.items():
+            for tokens in tokens_list:
+                for token in tokens:
+                    if token not in token_count:
+                        token_count[token] = 1
+                    else:
+                        token_count[token] += 1
+
+            tokens_per_author[author] = dict(sorted(token_count.items(), key=lambda ts: ts[1], reverse=True)[:n_rank])
+            token_count.clear()
+
+        return tokens_per_author
+

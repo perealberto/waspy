@@ -15,9 +15,10 @@ def main():
     # for a in sorted(chat.authors):
     #     print(f"- {a}")
 
-    # print(chat.use_per_author('hola'))
-    print(chat.author_ranking())
-    
+    wra = chat.word_ranking_per_author()
+
+    print(wra)
+
 
 if __name__ == '__main__':
     try:
