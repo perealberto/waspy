@@ -1,6 +1,7 @@
 🐝 Brainstorming WasPy 🐝
 
 UI
+- [ ] Herramienta de UI
 - [ ] Buscador de toda la vida
 - [ ] Grafo de interacciones (visual)
 - [ ] Template string básico para la clase Chat
@@ -14,3 +15,9 @@ ESTADÍSTICAS
 
 PARSER
 - [ ] Tener en cuenta los "mensajes" del sistema del chat
+
+DOCUMENTACIÓN
+- [x] Mejorar la documentación del README.md
+
+CONFIGURACIÓN
+- [x] Hacer un requirements.txt
