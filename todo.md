@@ -9,7 +9,7 @@ UI
 ESTADÍSTICAS
 - [x] Nº apariciones de palabra por persona
 - [x] Ranking de participación en el chat
-- [ ] Palabras más usadas por persona
+- [x] Palabras más usadas por persona
 - [ ] Grafo de interacciones en el chat usando etiquetados "@\u2068<nombre>\u2069"
 
 PARSER

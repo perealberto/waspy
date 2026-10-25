@@ -18,6 +18,7 @@ class Message:
 
 class Chat:
     STOPWORDS = {"DET", "ADP", "CCONJ", "SCONJ", "PRON"}
+    STOPTOKENS = {"archivo", "adjunto"}
 
     def __init__(self, file: Path, tokenize=False):
         self.path = file
@@ -71,6 +72,7 @@ class Chat:
                 msg.tokens = (
                     token.text for token in doc
                     if token.pos_ not in self.STOPWORDS and not token.is_punct and not token.is_space
+                        and token.text not in self.STOPTOKENS
                 )
 
     def __str__(self) -> str:
@@ -112,27 +114,24 @@ class Chat:
         Calcular el ranking de las n (= 3) palabras más utilizadas por
         cada autor del chat.
         """
-        # TODO - Eliminar "archivo" "adjunto" de los mensajes
-
-        tokens_per_author: dict[str, list[tuple[str]]] = {}
-
+        author_counts = {}
         for msg in self.messages:
-            if msg.author not in tokens_per_author:
-                tokens_per_author[msg.author] = [msg.tokens]
-            else:
-                tokens_per_author[msg.author].append(msg.tokens)
+            if not msg.tokens:
+                continue
 
-        token_count: dict[str, int] = {}
-        for author, tokens_list in tokens_per_author.items():
-            for tokens in tokens_list:
-                for token in tokens:
-                    if token not in token_count:
-                        token_count[token] = 1
-                    else:
-                        token_count[token] += 1
+            author = msg.author
+            if author not in author_counts:
+                author_counts[author] = {}
+            
+            current_counts = author_counts[author]
+            for token in msg.tokens:
+                current_counts[token] = current_counts.get(token, 0) + 1
 
-            tokens_per_author[author] = dict(sorted(token_count.items(), key=lambda ts: ts[1], reverse=True)[:n_rank])
-            token_count.clear()
+        tokens_per_author = {}
+        for author, counts in author_counts.items():
+            items = list(counts.items())
+            items.sort(key=lambda x: x[1], reverse=True)
+            tokens_per_author[author] = dict(items[:n_rank])
 
         return tokens_per_author
 

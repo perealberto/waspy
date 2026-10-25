@@ -17,8 +17,8 @@ def main():
 
     wra = chat.word_ranking_per_author()
 
-    print(wra)
-
+    for a,c in wra.items():
+        print(f"{a}: {c}")
 
 if __name__ == '__main__':
     try:
