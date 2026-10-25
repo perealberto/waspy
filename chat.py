@@ -13,8 +13,7 @@ class Message:
         self.tokens: tuple[str] = ()
 
     def __str__(self) -> str:
-        # TODO
-        pass
+        return f"{self.date.strftime("%x %R")} ({self.author}): {self.content}"
 
 class Chat:
     STOPWORDS = {"DET", "ADP", "CCONJ", "SCONJ", "PRON"}
@@ -22,8 +21,10 @@ class Chat:
 
     def __init__(self, file: Path, tokenize=False):
         self.path = file
+        self.name: str = ""
+        self.creation_date: datetime = datetime.min
         self.messages: list[Message] = []
-        self.authors: set[str] = set()
+        self.members: set[str] = set()
 
         self.__parser(file)
 
@@ -32,8 +33,14 @@ class Chat:
 
     def __parser(self, file) -> list[Message]:
         with open(file, mode='r', encoding='utf8') as f:
-            chat_lines = f.readlines()[1:]
-            for i,line in tqdm(enumerate(chat_lines), total=len(chat_lines), desc="Parseando chat"):
+            chat_lines = f.readlines()
+
+            chat_info_match = re.search(r"(\d{1,2}\/\d{1,2}\/\d{2,4}, \d{2}:\d{2}) - .+?\"(.+)\".", chat_lines[1])
+            chat_info = chat_info_match.groups()
+            self.creation_date = datetime.strptime(chat_info[0], '%d/%m/%y, %R')
+            self.group_name = chat_info[1]
+
+            for i,line in tqdm(enumerate(chat_lines[1:]), total=len(chat_lines[1:]), desc="Parseando chat"):
 
                 if not line:
                     continue
@@ -47,7 +54,7 @@ class Chat:
                     re_groups = is_new_msg.groups()
                     date = datetime.strptime(re_groups[0], '%d/%m/%y, %R')
                     author = re_groups[1]
-                    self.authors.add(author)
+                    self.members.add(author)
 
                     header_len = len("".join((g for g in re_groups if g))) + 5
                     content = line[header_len:]
@@ -76,43 +83,49 @@ class Chat:
                 )
 
     def __str__(self) -> str:
-        # TODO
-        return f""
+        header = f"{self.group_name.upper()}"
+        info = f"""
+        - Mensajes enviados: {len(self.messages)}
+        - Participantes: {len(self.members)}
+        - Fecha de creación: {self.creation_date.strftime("%x %R")}
+        - Última actividad: {self.messages[-1].date.strftime("%x %R")}"""
+        members = f"Miembros:\n\t- {'\n\t- '.join(sorted(self.members))}"
+        return f"{header}\n{info}\n{members}"
 
-    def use_per_author(self, word: str) -> dict[str, int]:
+    def word_use_per_member(self, word: str) -> dict[str, int]:
         """
         Calcular el nº de apariciones de `word` en los mensajes
-        agrupando por autor.
+        agrupando por miembro.
 
         # Parámetros
         - word (str): palabra a buscar
 
         # Salida
-        - dict(str, int): apariciones de `word` agrupadas por autor.
+        - dict(str, int): apariciones de `word` agrupadas por miembro.
         """
-        use_per_author: dict[str, str] = {k:0 for k in self.authors}
+        use_per_member: dict[str, str] = {k:0 for k in self.members}
         for m in self.messages:
             if word in m.tokens:
-                use_per_author[m.author] += 1
-        return use_per_author
+                use_per_member[m.author] += 1
+        return use_per_member
 
-    def author_ranking(self) -> dict[str, int]:
+    def members_ranking(self) -> dict[str, int]:
         """
-        Calcular el ranking de participación de los autores
+        Calcular el ranking de participación de los miembro
         del chat, ordenado de mayor a menor nº de mensajes.
 
         # Salida
-        - dict(str, int): nº mensajes enviados por autor ordenado.
+        - dict(str, int): nº mensajes enviados por miembro ordenado.
         """
-        ranking: dict[str, int] = {k:0 for k in self.authors}
+        ranking: dict[str, int] = {k:0 for k in self.members}
         for m in self.messages:
             ranking[m.author] += 1
         return dict(sorted(ranking.items(), key=lambda p: p[1], reverse=True))
 
-    def word_ranking_per_author(self, n_rank = 3) -> dict[str, dict[str, int]]:
+    def most_used_words_per_member(self, n_rank = 3) -> dict[str, dict[str, int]]:
         """
         Calcular el ranking de las n (= 3) palabras más utilizadas por
-        cada autor del chat.
+        cada miembro del chat.
         """
         author_counts = {}
         for msg in self.messages:

@@ -4,8 +4,8 @@ UI
 - [ ] Herramienta de UI
 - [ ] Buscador de toda la vida
 - [ ] Grafo de interacciones (visual)
-- [ ] Template string básico para la clase Chat
-- [ ] Template string básico para la clase Message
+- [x] Template string básico para la clase Chat 
+- [x] Template string básico para la clase Message
 
 ESTADÍSTICAS
 - [x] Nº apariciones de palabra por persona
@@ -21,3 +21,6 @@ DOCUMENTACIÓN
 
 CONFIGURACIÓN
 - [x] Hacer un requirements.txt
+
+PRUEBAS
+- [ ] Plantear set de TUs 

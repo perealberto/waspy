@@ -2,23 +2,16 @@ from chat import Chat
 from pathlib import Path
 from traceback import print_exc
 
-CHAT_PATH = Path('./public/chat/chat.txt')
+CHAT_PATH = Path('./public/chat/chat_copy.txt')
 
 def main():
-    chat = Chat(CHAT_PATH, tokenize=True)
+    chat = Chat(CHAT_PATH, tokenize=False)
 
-    # print("== Chat ADSL ==")
-    # print("- Mensajes enviados:", len(chat.messages), 'msgs')
-    # print()
-    # print("~ Integrantes ~")
-    # print()
-    # for a in sorted(chat.authors):
-    #     print(f"- {a}")
+    # chat
+    print(chat)
 
-    wra = chat.word_ranking_per_author()
-
-    for a,c in wra.items():
-        print(f"{a}: {c}")
+    # messages
+    # print(chat.messages[-1])
 
 if __name__ == '__main__':
     try:

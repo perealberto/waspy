@@ -31,3 +31,8 @@ $ pip install -r requirements.txt
 
 1. Export chat with the option "Export" within your group chat settings.
 2. Modify chat path in the code (temporary, we'll implement an UI) 
+
+## Thankings
+
+- Ellie, always in our hearts, _"per forever"_ 🚬.
+- Carmen, my best ally on the battlefield 🫃.
