@@ -1,7 +1,7 @@
 🐝 Brainstorming WasPy 🐝
 
 UI
-- [ ] Herramienta de UI
+    - [ ] Decidir librería de UI : [dearpygui](https://github.com/hoffstadt/DearPyGui)
 - [ ] Buscador de toda la vida
 - [ ] Grafo de interacciones (visual)
 - [x] Template string básico para la clase Chat 

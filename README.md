@@ -27,6 +27,12 @@ $ source .venv/bin/activate  # linux/mac
 $ pip install -r requirements.txt
 ```
 
+### External libraries
+
+- [Spacy](https://spacy.io/)
+- [Tqdm](https://tqdm.github.io/)
+- [DearPyGui](https://github.com/hoffstadt/DearPyGui)
+
 ## Usage
 
 1. Export chat with the option "Export" within your group chat settings.
