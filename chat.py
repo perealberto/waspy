@@ -1,4 +1,5 @@
 from datetime import datetime
+import networkx as nx
 import re
 from pathlib import Path
 import es_core_news_sm
@@ -45,6 +46,7 @@ class Chat:
                 if not line:
                     continue
 
+                # quitamos todas las líneas que no sean escritas por miembros
                 is_new_msg = re.match(r"(\d{1,2}\/\d{1,2}\/\d{2}, \d{2}:\d{2}) - ([^:\n]+):", line)
 
                 if not is_new_msg and line:
@@ -83,14 +85,42 @@ class Chat:
                 )
 
     def __str__(self) -> str:
-        header = f"{self.group_name.upper()}"
-        info = f"""
-        - Mensajes enviados: {len(self.messages)}
-        - Participantes: {len(self.members)}
-        - Fecha de creación: {self.creation_date.strftime("%x %R")}
-        - Última actividad: {self.messages[-1].date.strftime("%x %R")}"""
-        members = f"Miembros:\n\t- {'\n\t- '.join(sorted(self.members))}"
-        return f"{header}\n{info}\n{members}"
+        header = f"=== {getattr(self, 'group_name', 'SIN NOMBRE').upper()} ==="
+        
+        num_messages = len(self.messages)
+        last_activity = (
+            self.messages[-1].date.strftime("%x %R") 
+            if num_messages > 0 
+            else "Sin actividad"
+        )
+        
+        info = (
+            f"• Archivo: {self.path.name}\n"
+            f"• Fecha de creación: {self.creation_date.strftime('%x %R')}\n"
+            f"• Total de mensajes: {num_messages}\n"
+            f"• Participantes: {len(self.members)}\n"
+            f"• Última actividad: {last_activity}"
+        )
+        
+        members_list = sorted(list(self.members))
+        members_str = "\n".join([f"  - {m}" for m in members_list])
+        
+        return f"{header}\n\n{info}\n\nMiembros:\n{members_str}"
+
+    def __extract_mentions(self, text: str) -> None | str:
+        """
+        Extrae las menciones realizadas por los miembros del chat
+        aplicando la expresión regular r'@\u2068(\w+?)\u2069' al
+        contenido crudo del mensaje.
+
+        # Parámetros
+        - text (str): contenido del mensaje
+
+        # Salida:
+        - None | str: menciones de miembros contenidas en `text`
+        """
+        return (mention.groups()[0] for mention in re.finditer(r'@\u2068(\w+?)\u2069', text) 
+            if getattr(mention, 'groups', False))
 
     def word_use_per_member(self, word: str) -> dict[str, int]:
         """
@@ -148,3 +178,5 @@ class Chat:
 
         return tokens_per_author
 
+    def calculate_relation_graph(self):
+        pass

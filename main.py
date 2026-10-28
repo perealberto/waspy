@@ -2,7 +2,7 @@ from chat import Chat
 from pathlib import Path
 from traceback import print_exc
 
-CHAT_PATH = Path('./public/chat/chat_copy.txt')
+CHAT_PATH = Path('./public/chat.txt')
 
 def main():
     chat = Chat(CHAT_PATH, tokenize=False)
@@ -10,8 +10,9 @@ def main():
     # chat
     print(chat)
 
-    # messages
-    # print(chat.messages[-1])
+    # relation graph
+    chat.calculate_relation_graph()
+
 
 if __name__ == '__main__':
     try:

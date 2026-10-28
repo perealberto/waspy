@@ -11,7 +11,12 @@ ESTADÍSTICAS
 - [x] Nº apariciones de palabra por persona
 - [x] Ranking de participación en el chat
 - [x] Palabras más usadas por persona
-- [ ] Grafo de interacciones en el chat usando etiquetados "@\u2068<nombre>\u2069"
+- [ ] Grafo de interacciones en el chat usando etiquetas "@\u2068<nombre>\u2069" en el contenido del mensaje
+    - [x] Escribir caracteres especiales
+    - [x] Modificar chat con menciones
+    - [x] Detector de menciones en mensajes de texto
+    - [ ] Algoritmo de detección de relaciones entre personas mencionadas del chat
+    - [ ] Plotear el grafo de relaciones del chat
 
 PARSER
 - [ ] Tener en cuenta los "mensajes" del sistema del chat
