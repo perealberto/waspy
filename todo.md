@@ -1,11 +1,15 @@
 🐝 Brainstorming WasPy 🐝
 
 UI
-- [x] Decidir librería de UI : [dearpygui](https://github.com/hoffstadt/DearPyGui)
-- [ ] Buscador de toda la vida
-- [ ] Grafo de interacciones (visual)
 - [x] Template string básico para la clase Chat 
 - [x] Template string básico para la clase Message
+- [x] Decidir librería de UI : [dearpygui](https://github.com/hoffstadt/DearPyGui)
+- [x] Crear la clase base de UI
+- [ ] Hacer pequeña interfaz
+    - [ ] Importar chat
+    - [ ] Buscador de toda la vida
+    - [ ] Lanzar métodos estadísticos
+    - [ ] Grafo de interacciones, interactivo ?
 
 ESTADÍSTICAS
 - [x] Nº apariciones de palabra por persona
@@ -17,7 +21,7 @@ ESTADÍSTICAS
     - [x] Detector de menciones en mensajes de texto
     - [x] Algoritmo de detección de relaciones entre personas mencionadas del chat
     - [x] Plotear el grafo de relaciones del chat
-    - [ ] Arreglar formato de imagen
+    - [ ] Arreglar disposición del grafo en el plot
 
 PARSER
 - [ ] Parseador para formato .md
@@ -25,13 +29,14 @@ PARSER
 - [ ] Tener en cuenta los "mensajes" del sistema del chat
 
 DOCUMENTACIÓN
-- [x] Mejorar la documentación del README.md
+- [x] Escribir README.md
 
 CONFIGURACIÓN
 - [x] Hacer un requirements.txt
 - [ ] Configurar proyecto como módulo
+- [ ] Configurar linter y organizador de imports
 - [ ] Entrada por comandos -> hacer interfaz con argparse
 - [ ] Gestión de warnings y exceptions
 
 PRUEBAS
-- [ ] Plantear set de TUs 
+- [ ] Plantear set de TUs ?
