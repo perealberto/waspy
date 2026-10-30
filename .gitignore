@@ -1,5 +1,12 @@
-__pycache__/**
-.venv/**
-public/**
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
 
+.venv
+
+public/
 !public/chat.txt
+

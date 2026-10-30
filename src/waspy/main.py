@@ -1,9 +1,8 @@
-from chat import Chat 
-from ui import UI
+from .chat import Chat 
+from .ui import UI
 from pathlib import Path
 from traceback import print_exc
 
-# CHAT_PATH = Path('/home/perealberto/Documentos/Chat de WhatsApp con ✨ADSL✨👑🎀🐍/Chat de WhatsApp con ✨ADSL✨👑🎀🐍.txt')
 CHAT_PATH = Path('./public/chat.txt')
 EXPORT_GRAPH = Path('./public/graph.png')
 

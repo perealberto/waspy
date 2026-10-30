@@ -1,4 +1,5 @@
-from chat import Chat
+from .chat import Chat
+
 import matplotlib as mpl
 from matplotlib import pyplot as plt
 import networkx as nx

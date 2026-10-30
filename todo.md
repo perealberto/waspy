@@ -33,7 +33,7 @@ DOCUMENTACIÓN
 
 CONFIGURACIÓN
 - [x] Hacer un requirements.txt
-- [ ] Configurar proyecto como módulo
+- [x] Configurar proyecto como módulo
 - [ ] Configurar linter y organizador de imports
 - [ ] Entrada por comandos -> hacer interfaz con argparse
 - [ ] Gestión de warnings y exceptions
