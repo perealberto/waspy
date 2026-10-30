@@ -14,6 +14,7 @@ dependencies = [
     "networkx>=3.7",
     "numpy>=2.5.4",
     "pyqt6>=6.12.0",
+    "pyvis>=0.3.2",
     "scipy>=1.18.1",
     "spacy>=3.8.18",
     "tqdm>=4.70.1",

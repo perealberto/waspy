@@ -9,7 +9,7 @@ UI
     - [ ] Importar chat
     - [ ] Buscador de toda la vida
     - [ ] Lanzar métodos estadísticos
-    - [ ] Grafo de interacciones, interactivo ?
+    - [ ] Grafo de interacciones interactivo -> PyVis
 
 ESTADÍSTICAS
 - [x] Nº apariciones de palabra por persona
@@ -21,7 +21,8 @@ ESTADÍSTICAS
     - [x] Detector de menciones en mensajes de texto
     - [x] Algoritmo de detección de relaciones entre personas mencionadas del chat
     - [x] Plotear el grafo de relaciones del chat
-    - [ ] Arreglar disposición del grafo en el plot
+    - [x] Arreglar disposición del grafo en el plot
+    - [ ] Añadir respuestas a mensajes como interacción
 
 PARSER
 - [ ] Parseador para formato .md

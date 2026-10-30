@@ -7,6 +7,7 @@ import re
 from pathlib import Path
 import es_core_news_sm
 from tqdm import tqdm
+import unicodedata
 
 
 class Message:
@@ -58,7 +59,7 @@ class Chat:
                 if is_new_msg:
                     re_groups = is_new_msg.groups()
                     date = datetime.strptime(re_groups[0], '%d/%m/%y, %R')
-                    author = re_groups[1]
+                    author = self.__clean_label(re_groups[1])
                     self.members.add(author)
 
                     header_len = len("".join((g for g in re_groups if g))) + 5
@@ -70,6 +71,20 @@ class Chat:
                     if self.messages:
                         last_msg = self.messages[-1]
                         last_msg.content += line
+
+    def __clean_label(self, name: str) -> str:
+        """
+        Elimina emojis y símbolos pictográficos, conserva letras acentuadas.
+        
+        # Parámetros
+        - name (str): nombre del autor del mensaje.
+        """
+        cleaned = "".join(
+            ch for ch in name
+            if unicodedata.category(ch) not in ("So", "Cs", "Cn", "Sk")
+            and ch not in "\u200d\ufe0f"
+        )
+        return re.sub(r"\s+", " ", cleaned).strip() or name
 
     def __tokenize_all_messages(self):
         """
