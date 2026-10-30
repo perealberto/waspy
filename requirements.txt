@@ -3,3 +3,7 @@ es_core_news_sm
 tqdm
 dearpygui
 networkx
+matplotlib
+numpy
+pyqt6
+scipy

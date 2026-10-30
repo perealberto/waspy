@@ -1,4 +1,7 @@
 from datetime import datetime
+from itertools import product
+import matplotlib as mpl
+from matplotlib import pyplot as plt
 import networkx as nx
 import re
 from pathlib import Path
@@ -107,20 +110,19 @@ class Chat:
         
         return f"{header}\n\n{info}\n\nMiembros:\n{members_str}"
 
-    def __extract_mentions(self, text: str) -> None | str:
+    def __extract_mentions(self, text: str) -> list[str]:
         """
         Extrae las menciones realizadas por los miembros del chat
-        aplicando la expresión regular r'@\u2068(\w+?)\u2069' al
-        contenido crudo del mensaje.
+        aplicando la expresión regular al contenido crudo del mensaje.
 
         # Parámetros
         - text (str): contenido del mensaje
 
         # Salida:
-        - None | str: menciones de miembros contenidas en `text`
+        - list (str): menciones de miembros contenidas en `text`
         """
-        return (mention.groups()[0] for mention in re.finditer(r'@\u2068(\w+?)\u2069', text) 
-            if getattr(mention, 'groups', False))
+        return [mention.groups()[0] for mention in re.finditer(r'@\u2068(\w+?)\u2069', text) 
+            if getattr(mention, 'groups', False)]
 
     def word_use_per_member(self, word: str) -> dict[str, int]:
         """
@@ -156,6 +158,13 @@ class Chat:
         """
         Calcular el ranking de las n (= 3) palabras más utilizadas por
         cada miembro del chat.
+
+        # Parámetros
+        - n_rank (int): tamaño del ranking
+
+        # Salida
+        - dict(str, dict(str, int)): palabras más utilizadas por cada
+        miembro del chat
         """
         author_counts = {}
         for msg in self.messages:
@@ -178,5 +187,38 @@ class Chat:
 
         return tokens_per_author
 
-    def calculate_relation_graph(self):
-        pass
+    def calculate_relation_graph(self) -> nx.DiGraph:
+        """
+        Calcular el grafo dirigido de relaciones entre los miembros
+        del chat utilizando `__extract_mentions` para detectar
+        menciones del chat.
+
+        - Los nodos del grafo almacenará los nombres de los miembros.
+        - Las aristas estarán dirigidas del nodo (miembro) que menciona
+        hacia el que es mencionado y su peso será proporcional al nº de
+        veces que ha ocurrido.
+
+        # Salida
+        - nx.Digraph: grafo dirigido con las conexiones del chat
+        """
+        g = nx.DiGraph()
+        g.add_nodes_from(self.members)
+
+        for msg in self.messages:
+            mentions = self.__extract_mentions(msg.content)
+
+            if len(mentions) < 1:
+                continue
+
+            for member in mentions:
+                if member == 'todos' or member == 'Meta AI':
+                    continue
+                if not g.has_edge(msg.author, member):
+                    g.add_weighted_edges_from([(msg.author, member, 1)])
+                data = g.get_edge_data(msg.author, member)
+                data['weight'] += 1
+
+        if len(g.edges) == 0:
+            print('No se encontraron relaciones en el chat.')
+
+        return g

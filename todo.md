@@ -15,10 +15,13 @@ ESTADÍSTICAS
     - [x] Escribir caracteres especiales
     - [x] Modificar chat con menciones
     - [x] Detector de menciones en mensajes de texto
-    - [ ] Algoritmo de detección de relaciones entre personas mencionadas del chat
-    - [ ] Plotear el grafo de relaciones del chat
+    - [x] Algoritmo de detección de relaciones entre personas mencionadas del chat
+    - [x] Plotear el grafo de relaciones del chat
+    - [ ] Arreglar formato de imagen
 
 PARSER
+- [ ] Parseador para formato .md
+- [ ] Quitar emoticonos de los nombres
 - [ ] Tener en cuenta los "mensajes" del sistema del chat
 
 DOCUMENTACIÓN
@@ -26,6 +29,9 @@ DOCUMENTACIÓN
 
 CONFIGURACIÓN
 - [x] Hacer un requirements.txt
+- [ ] Configurar proyecto como módulo
+- [ ] Entrada por comandos -> hacer interfaz con argparse
+- [ ] Gestión de warnings y exceptions
 
 PRUEBAS
 - [ ] Plantear set de TUs 
