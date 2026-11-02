@@ -3,7 +3,7 @@
 UI
 - [x] Template string básico para la clase Chat 
 - [x] Template string básico para la clase Message
-- [x] Decidir librería de UI : [dearpygui](https://github.com/hoffstadt/DearPyGui)
+- [x] Decidir librería de UI : ~~[dearpygui](https://github.com/hoffstadt/DearPyGui)~~ [streamlit]()
 - [x] Crear la clase base de UI
 - [ ] Hacer pequeña interfaz
     - [ ] Importar chat
@@ -25,19 +25,27 @@ ESTADÍSTICAS
     - [ ] Añadir respuestas a mensajes como interacción
 
 PARSER
+- [ ] Lector de ficheros .zip
+    - [ ] Si importa varios ficheros .zip unir los chats en uno entero
 - [ ] Parseador para formato .md
-- [ ] Quitar emoticonos de los nombres
-- [ ] Tener en cuenta los "mensajes" del sistema del chat
+- [ ] Parseador para formato .txt
+- [x] Quitar emoticonos de los nombres
+- [ ] Tener en cuenta los "mensajes" del sistema del chat ????
 
 DOCUMENTACIÓN
 - [x] Escribir README.md
+- [ ] Actualizar información README.md - 02/11/26
 
 CONFIGURACIÓN
 - [x] Hacer un requirements.txt
 - [x] Configurar proyecto como módulo
 - [ ] Configurar linter y organizador de imports
 - [ ] Entrada por comandos -> hacer interfaz con argparse
+- [ ] Reorganizar estructura del proyecto
+    - Punto de entrada -> MAIN: llamamos a UI, que contiene las funciones para gestionar la app
+    - Separación de responsabilidades en ficheros independientes:
+        - _ui.py_: interfaz de la aplicación, controla todas las acciones que el usuario realiza
+        - _models.py_: "base de datos" de la aplicación, almacena información sobre el chat y los resultados de análisis
+        - _analysis.py_: cálculos estadísticos y análisis de la información del chat
+        - _parser.py_: convierte la información .txt o .md en objetos de la aplicación 
 - [ ] Gestión de warnings y exceptions
-
-PRUEBAS
-- [ ] Plantear set de TUs ?

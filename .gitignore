@@ -10,4 +10,5 @@ lib/
 
 public/
 !public/chat.txt
+temp/
 
